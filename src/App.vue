@@ -1,5 +1,6 @@
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
+import Card from "./Card.vue";
 
 const pokemonName = ref();
 const pokemon = ref();
@@ -18,6 +19,12 @@ async function getPokemon() {
       pokemon.value = {
         name: data.name,
         image: data.sprites.front_default,
+        base_experience: data.base_experience,
+        stats: data.stats,
+        height: data.height,
+        weight: data.weight,
+        abilities: data.abilities,
+        types: data.types,
       };
 
       console.log(data);
@@ -27,13 +34,6 @@ async function getPokemon() {
       errorMessage.value = error;
     });
 }
-
-// const test = ref("");
-// const pokemons = ref([
-//   { id: 1, name: "charizard" },
-//   { id: 2, name: "piplop" },
-//   { id: 3, name: "ditto" },
-// ]);
 </script>
 
 <template>
@@ -48,13 +48,5 @@ async function getPokemon() {
     {{ errorMessage }}
   </div>
 
-  <div v-if="pokemon">
-    <h1>{{ pokemon.name }}</h1>
-
-    <img :src="pokemon.image" :alt="pokemon.name" />
-  </div>
+  <Card v-if="pokemon" :pokemon="pokemon" />
 </template>
-
-<style>
-@import "./style.css";
-</style>
