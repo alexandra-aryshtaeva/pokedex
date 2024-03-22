@@ -1,54 +1,60 @@
 <script setup>
-import { onMounted, ref } from "vue";
+import { ref } from "vue";
 
-//________ Pink ________________
-// function handleClick() {
-//   isPink.value = !isPink.value;
-// }
-// const isPink = ref(false);
+const pokemonName = ref();
+const pokemon = ref();
+const errorMessage = ref();
 
-// _____________List________________________
-// const pokemons = ref([{ label: "charizard" }, { label: "piplup" }]);
-// const newPokemon = ref("");
+async function getPokemon() {
+  await fetch("https://pokeapi.co/api/v2/pokemon/" + pokemonName.value)
+    .then((response) => {
+      if (response.ok === false) {
+        throw new Error("Could not fetch the sauce");
+      }
 
-const title = ref("Pokedex");
+      return response.json();
+    })
+    .then((data) => {
+      pokemon.value = {
+        name: data.name,
+        image: data.sprites.front_default,
+      };
+
+      console.log(data);
+    })
+    .catch((error) => {
+      console.error(error);
+      errorMessage.value = error;
+    });
+}
+
 // const test = ref("");
-const pokemons = ref([
-  { id: 1, name: "charizard" },
-  { id: 2, name: "piplop" },
-  { id: 3, name: "ditto" },
-]);
+// const pokemons = ref([
+//   { id: 1, name: "charizard" },
+//   { id: 2, name: "piplop" },
+//   { id: 3, name: "ditto" },
+// ]);
 </script>
 
 <template>
-  <!-- _______ Pink ____________ -->
+  <input v-model="pokemonName" type="text" placeholder="choose your pokemon!" />
+  <button @click="getPokemon()">search</button>
 
-  <!-- <button @click="handleClick()" :class="{ 'cool-class': is'P'ink }">
-    Toggle cool mode!
-  </button> -->
+  <div v-show="pokemonName === 'piplup'">
+    <strong>thats my fave!</strong>
+  </div>
 
-  <!--_________ POKEMON _____________________ -->
-  <h1>{{ title.toUpperCase() }}</h1>
-  <!-- index part not necessary for this case -->
-  <ul>
-    <li v-for="({ id, name }, index) in pokemons">
-      <!-- (id: {{ id }})
-      (index: {{ index }}) -->
-      {{ name }}
-    </li>
-  </ul>
-  <!-- <input v-model="test" type="text" placeholder="choose your pokemon!" /> -->
+  <div v-if="errorMessage">
+    {{ errorMessage }}
+  </div>
 
-  <!-- <input v-model="newPokemon" type="text" placeholder="Search your pokemon!" />
-  <ul ref="coolList">
-    <li v-for="{ label } in pokemons">{{ label }}</li>
-    <li>{{ newPokemon }}</li>
-  </ul> -->
+  <div v-if="pokemon">
+    <h1>{{ pokemon.name }}</h1>
+
+    <img :src="pokemon.image" :alt="pokemon.name" />
+  </div>
 </template>
 
 <style>
 @import "./style.css";
-/* .cool-class {
-  background-color: pink;
-} */
 </style>
