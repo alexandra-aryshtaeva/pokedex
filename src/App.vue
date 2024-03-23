@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref } from "vue";
 import Card from "./Card.vue";
+import Search from "~icons/material-symbols/search";
 
 const pokemonName = ref();
 const pokemon = ref();
@@ -37,8 +38,16 @@ async function getPokemon() {
 </script>
 
 <template>
-  <input v-model="pokemonName" type="text" placeholder="choose your pokemon!" />
-  <button @click="getPokemon()">search</button>
+  <h1>Pokedex</h1>
+  <div class="input">
+    <Search class="search" />
+    <input
+      @keyup.enter="getPokemon()"
+      v-model="pokemonName"
+      type="text"
+      placeholder="Choose your pokemon!"
+    />
+  </div>
 
   <div v-show="pokemonName === 'piplup'">
     <strong>thats my fave!</strong>
@@ -50,3 +59,45 @@ async function getPokemon() {
 
   <Card v-if="pokemon" :pokemon="pokemon" />
 </template>
+
+<style scoped>
+h1 {
+  font-family: "Pokemon Solid";
+  padding-right: 32px;
+  position: fixed;
+  top: calc(15%);
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 72px;
+  margin-block: 0;
+  -webkit-text-stroke: 2px var(--blue);
+  color: yellow;
+  text-shadow: 3px 3px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000,
+    -1px 1px 0 #000, 1px 1px 0 #000;
+}
+.input {
+  display: inline-flex;
+  position: fixed;
+  top: calc(50% - 64px);
+  left: 50%;
+  transform: translateX(-50%);
+  align-content: center;
+  align-items: center;
+  border-radius: 32px;
+  background-color: white;
+  border: solid var(--blue);
+  padding: 8px;
+}
+input {
+  all: unset;
+  padding-bottom: 1px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  justify-self: center;
+  padding-right: 25vw;
+}
+.search {
+  padding-right: 4px;
+  padding-top: 2px;
+  color: var(--blue);
+}
+</style>
