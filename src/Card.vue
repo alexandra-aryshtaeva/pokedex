@@ -44,56 +44,99 @@ const upperName = computed(() => {
 
 <template>
   <div id="modal">
-    <div id="card">
-      <div id="title">
-        <h1>{{ upperName }}</h1>
+    <Transition>
+      <div id="card">
+        <div id="title">
+          <h1>{{ upperName }}</h1>
 
-        <img :src="pokemon.image" :alt="pokemon.name" />
+          <img :src="pokemon.image" :alt="pokemon.name" />
+          <div id="info">
+            <ul>
+              <h3>Info</h3>
+              <li>
+                <div v-for="t in types">Type: {{ t }}</div>
+              </li>
+
+              <li>height: {{ heightInMeters }} m</li>
+              <li>weigth: {{ weightInKg }} kg</li>
+              <li>ability: {{ ability }}</li>
+            </ul>
+          </div>
+          <div id="stats">
+            <ul>
+              <h3>Stats</h3>
+              <li v-for="stat in stats">
+                {{ stat.name }}: {{ stat.value }} &nbsp
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
-      <ul id="info">
-        <h3>Info</h3>
-        <li>
-          <div v-for="t in types">Type: {{ t }}</div>
-        </li>
-
-        <li>height: {{ heightInMeters }} m</li>
-        <li>weigth: {{ weightInKg }} kg</li>
-        <li>ability: {{ ability }}</li>
-      </ul>
-
-      <ul id="stats">
-        <h3>Stats</h3>
-        <li v-for="stat in stats">{{ stat.name }}: {{ stat.value }} &nbsp</li>
-      </ul>
-    </div>
+    </Transition>
   </div>
 </template>
 
 <style scoped>
+.v-enter-active,
+.v-leave-active {
+  transition: opacity 0.5s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+  opacity: 0;
+}
 #modal {
+  /* modal */
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.4);
-}
 
-#card {
-  background-color: #fefefe;
-  margin: auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-#title {
-  background-color: rgb(255, 177, 177);
+  /* card center */
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   text-align: center;
   justify-content: center;
   align-items: center;
+}
+
+#card {
+  box-shadow: 1px 8px 16px rgb(62, 23, 23);
+  background-color: #fefefe;
+  padding: 20px;
+  border: 4px solid white;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+  width: 20%;
+  height: 75vh;
+  animation: move 0.5s;
+}
+
+@keyframes move {
+  from {
+    transform: translateX(0px) translateY(-200px);
+  }
+  to {
+    transform: translateX(0px) translateY(0px);
+  }
+}
+
+#title {
+  background-color: aqua;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  justify-content: center;
+  justify-self: center;
+  align-items: center;
+  align-self: center;
 }
 
 ul {
@@ -103,8 +146,5 @@ h1 {
   border: solid 2px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-}
-img {
-  border: solid 2px blue;
 }
 </style>

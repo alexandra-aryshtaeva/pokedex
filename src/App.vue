@@ -62,7 +62,7 @@ const show = ref(true);
     {{ errorMessage }}
   </div>
 
-  <Card v-if="pokemon" :pokemon="pokemon" />
+  <Transition> <Card v-if="pokemon" :pokemon="pokemon" /> </Transition>
 </template>
 
 <style scoped>
