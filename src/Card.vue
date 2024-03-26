@@ -3,6 +3,14 @@ import { computed } from "vue";
 
 const props = defineProps(["pokemon"]);
 
+const types = computed(() => {
+  return props.pokemon.types
+    .sort((a, b) => a.slot - b.slot)
+    .map((t) => {
+      return t.type.name;
+    });
+});
+
 const stats = computed(() => {
   return props.pokemon.stats.map((stat) => {
     return {
@@ -26,14 +34,6 @@ const ability = computed(() => {
   return ability.ability.name;
 });
 
-const types = computed(() => {
-  return props.pokemon.types
-    .sort((a, b) => a.slot - b.slot)
-    .map((t) => {
-      return t.type.name;
-    });
-});
-
 const upperName = computed(() => {
   const first = props.pokemon.name.slice(0, 1);
 
@@ -43,37 +43,68 @@ const upperName = computed(() => {
 </script>
 
 <template>
-  <h1>{{ upperName }}</h1>
-  <img :src="pokemon.image" :alt="pokemon.name" />
-  <ul id="">
-    <li>{{ pokemon.base_experience }} base experience</li>
-    <li>
-      <thead>
-        <th v-for="stat in stats">{{ stat.name }}</th>
-      </thead>
+  <div id="modal">
+    <div id="card">
+      <div id="title">
+        <h1>{{ upperName }}</h1>
 
-      <tbody>
-        <td v-for="stat in stats">{{ stat.value }}</td>
-      </tbody>
-    </li>
-    <li>{{ heightInMeters }} m</li>
-    <li>{{ weightInKg }} kg</li>
-    <li>{{ ability }}</li>
-    <li>
-      <div v-for="t in types">
-        {{ t }}
+        <img :src="pokemon.image" :alt="pokemon.name" />
       </div>
-    </li>
-  </ul>
+      <ul id="info">
+        <h3>Info</h3>
+        <li>
+          <div v-for="t in types">Type: {{ t }}</div>
+        </li>
+
+        <li>height: {{ heightInMeters }} m</li>
+        <li>weigth: {{ weightInKg }} kg</li>
+        <li>ability: {{ ability }}</li>
+      </ul>
+
+      <ul id="stats">
+        <h3>Stats</h3>
+        <li v-for="stat in stats">{{ stat.name }}: {{ stat.value }} &nbsp</li>
+      </ul>
+    </div>
+  </div>
 </template>
 
 <style scoped>
+#modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+#card {
+  background-color: #fefefe;
+  margin: auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+}
+
+#title {
+  background-color: rgb(255, 177, 177);
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  justify-content: center;
+  align-items: center;
+}
+
 ul {
   list-style: none;
 }
 h1 {
+  border: solid 2px;
   font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
     "Lucida Sans", Arial, sans-serif;
-  background-color: red;
+}
+img {
+  border: solid 2px blue;
 }
 </style>

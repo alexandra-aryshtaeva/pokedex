@@ -20,7 +20,6 @@ async function getPokemon() {
       pokemon.value = {
         name: data.name,
         image: data.sprites.front_default,
-        base_experience: data.base_experience,
         stats: data.stats,
         height: data.height,
         weight: data.weight,
@@ -81,6 +80,9 @@ h1 {
   text-shadow: 0px 0px 0px red, 0 0 0em blue, 1px 8px 10px rgb(96, 28, 28);
 }
 .input {
+  font-weight: 500;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--blue);
   display: inline-flex;
   position: fixed;
   top: calc(50% - 64px);
@@ -89,7 +91,7 @@ h1 {
   align-content: center;
   align-items: center;
   border-radius: 32px;
-  background-color: white;
+  background-color: rgb(255, 233, 233);
   border: solid var(--blue);
   padding: 8px;
   box-shadow: 1px 8px 16px rgb(107, 28, 28);
@@ -97,13 +99,18 @@ h1 {
 input {
   all: unset;
   padding-bottom: 1px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   justify-self: center;
   padding-right: 25vw;
 }
-.search {
-  padding-right: 4px;
-  padding-top: 2px;
+::placeholder {
+  opacity: 0.8;
   color: var(--blue);
+}
+.search {
+  padding: 2px 4px;
+  padding-top: 3px;
+  color: var(--blue);
+  height: 32px;
+  width: 32px;
 }
 </style>
