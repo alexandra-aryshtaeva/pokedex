@@ -1,7 +1,9 @@
 <script setup>
 import { computed } from "vue";
+import { mapTypeToColor } from "./utils";
 
 const props = defineProps(["pokemon"]);
+const emit = defineEmits(["return"]);
 
 const types = computed(() => {
   return props.pokemon.types
@@ -40,36 +42,31 @@ const upperName = computed(() => {
   const rest = props.pokemon.name.slice(1, props.pokemon.name.length);
   return first.toUpperCase() + rest;
 });
+
+const color = computed(() => mapTypeToColor(types.value[0]));
 </script>
 
 <template>
   <div id="modal">
     <Transition>
       <div id="card">
-        <div id="title">
-          <h1>{{ upperName }}</h1>
+        <h1>{{ upperName }}</h1>
 
-          <img :src="pokemon.image" :alt="pokemon.name" />
-          <div id="info">
-            <ul>
-              <h3>Info</h3>
-              <li>
-                <div v-for="t in types">Type: {{ t }}</div>
-              </li>
+        <img :src="pokemon.image" :alt="pokemon.name" />
+        <div id="info">
+          <h3>Info</h3>
+          <li>
+            <div v-for="t in types">Type: {{ t }}</div>
+          </li>
 
-              <li>height: {{ heightInMeters }} m</li>
-              <li>weigth: {{ weightInKg }} kg</li>
-              <li>ability: {{ ability }}</li>
-            </ul>
-          </div>
-          <div id="stats">
-            <ul>
-              <h3>Stats</h3>
-              <li v-for="stat in stats">
-                {{ stat.name }}: {{ stat.value }} &nbsp
-              </li>
-            </ul>
-          </div>
+          <li>height: {{ heightInMeters }} m</li>
+          <li>weigth: {{ weightInKg }} kg</li>
+          <li>ability: {{ ability }}</li>
+        </div>
+        <div id="stats">
+          <h3>Stats</h3>
+          <li v-for="stat in stats">{{ stat.name }}: {{ stat.value }} &nbsp</li>
+          <button @click="emit('return')">Return</button>
         </div>
       </div>
     </Transition>
@@ -104,16 +101,19 @@ const upperName = computed(() => {
 }
 
 #card {
+  font-family: "Pixelify Sans";
+  font-size: 20px;
   box-shadow: 1px 8px 16px rgb(62, 23, 23);
-  background-color: #fefefe;
-  padding: 20px;
-  border: 4px solid white;
+  background: linear-gradient(0deg, v-bind(color), rgba(253, 187, 45, 0.1) 99%);
+  padding: 16px;
+
   border-radius: 16px;
   display: flex;
   flex-direction: column;
   text-align: center;
   justify-content: center;
   align-items: center;
+
   width: 20%;
   height: 75vh;
   animation: move 0.5s;
@@ -127,24 +127,33 @@ const upperName = computed(() => {
     transform: translateX(0px) translateY(0px);
   }
 }
-
-#title {
-  background-color: aqua;
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  justify-content: center;
-  justify-self: center;
-  align-items: center;
-  align-self: center;
+h1 {
+  margin-bottom: 48px;
+  margin-top: 0px;
 }
-
+img {
+  border: solid 2px v-bind(color);
+  padding: 8px;
+  border-radius: 64px;
+  margin-bottom: 48px;
+  margin-top: 0px;
+  box-shadow: 1px 8px 16px rgb(62, 23, 23);
+}
 ul {
   list-style: none;
 }
-h1 {
-  border: solid 2px;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+li {
+  list-style: none;
+}
+h3 {
+  margin: 0px;
+}
+#stats {
+  margin-bottom: 48px;
+  margin-top: 0px;
+  padding: 8px;
+  padding-top: 16px;
+
+  padding-left: 16px;
 }
 </style>

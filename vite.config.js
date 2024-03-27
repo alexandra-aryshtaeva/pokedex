@@ -15,6 +15,10 @@ export default defineConfig({
       autoInstall: true,
     }),
     fonts({
+      google: {
+        preconnect: true,
+        families: ["Pixelify Sans"],
+      },
       custom: {
         families: [
           {

@@ -36,6 +36,11 @@ async function getPokemon() {
     });
 }
 const show = ref(true);
+
+function handleReturn() {
+  show.value = true;
+  pokemon.value = null;
+}
 </script>
 
 <template>
@@ -62,7 +67,9 @@ const show = ref(true);
     {{ errorMessage }}
   </div>
 
-  <Transition> <Card v-if="pokemon" :pokemon="pokemon" /> </Transition>
+  <Transition>
+    <Card v-if="pokemon" :pokemon="pokemon" @return="handleReturn()" />
+  </Transition>
 </template>
 
 <style scoped>

@@ -1,11 +1,12 @@
 :root {
   --blue: #104a73;
+  --red: #de3d33;
 }
 
 body {
-  background-image: url("./better_pokeball.png");
+  background-image: url("./pokeball.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: bottom right;
-  background-color: #de3d33;
+  background-color: var(--red);
 }
