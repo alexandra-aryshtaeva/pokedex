@@ -20,6 +20,8 @@ export default defineConfig({
         families: ["Pixelify Sans"],
       },
       custom: {
+        preload: true,
+        prefetch: true,
         families: [
           {
             name: "Pokemon Hollow",
