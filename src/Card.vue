@@ -128,14 +128,16 @@ const color = computed(() => mapTypeToColor(types.value[0]));
   }
 }
 h1 {
-  margin-bottom: 48px;
-  margin-top: 0px;
+  color: v-bind(color);
+
+  margin-bottom: 32px;
+  margin-top: 16px;
 }
 img {
   border: solid 2px v-bind(color);
   padding: 8px;
   border-radius: 64px;
-  margin-bottom: 48px;
+  margin-bottom: 32px;
   margin-top: 0px;
   box-shadow: 1px 8px 16px rgb(62, 23, 23);
 }
@@ -146,7 +148,22 @@ li {
   list-style: none;
 }
 h3 {
+  opacity: 0.9;
   margin: 0px;
+}
+button {
+  color: v-bind(color);
+  margin-top: 16px;
+  padding: 16px 32px;
+  font-family: "Pixelify Sans";
+  border: solid black 2px;
+  border-radius: 16px;
+  font-size: 16px;
+  font-weight: bolder;
+  box-shadow: 0px 6px 10px rgba(62, 23, 23, 0.5);
+}
+#info {
+  margin-top: 0px;
 }
 #stats {
   margin-bottom: 48px;

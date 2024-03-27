@@ -8,7 +8,9 @@ const pokemon = ref();
 const errorMessage = ref();
 
 async function getPokemon() {
-  await fetch("https://pokeapi.co/api/v2/pokemon/" + pokemonName.value)
+  await fetch(
+    "https://pokeapi.co/api/v2/pokemon/" + pokemonName.value.toLowerCase()
+  )
     .then((response) => {
       if (response.ok === false) {
         throw new Error("Could not fetch the sauce");
