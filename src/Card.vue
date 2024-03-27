@@ -113,8 +113,9 @@ const color = computed(() => mapTypeToColor(types.value[0]));
   text-align: center;
   justify-content: center;
   align-items: center;
-
-  width: 20%;
+  width: 320px;
+  max-width: calc(100% - 32px);
+  margin-inline: auto;
   height: 75vh;
   animation: move 0.5s;
 }
@@ -152,6 +153,7 @@ h3 {
   margin: 0px;
 }
 button {
+  cursor: pointer;
   color: v-bind(color);
   margin-top: 16px;
   padding: 16px 32px;
